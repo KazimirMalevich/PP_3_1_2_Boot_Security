@@ -29,16 +29,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-//    @Override
-//    public User deleteUser(Integer id) throws NullPointerException {
-//
-//        User user = getUser(id);
-//        if (null == user) {
-//            throw new NullPointerException("User not found");
-//        }
-//        entityManager.remove(user);
-//        return user;
-//    }
     public Optional<User> deleteUser(Integer id) {
         Optional<User> user = Optional.ofNullable(getUser(id));
         entityManager.remove(user.orElseThrow(() -> new NullPointerException("User not found")));

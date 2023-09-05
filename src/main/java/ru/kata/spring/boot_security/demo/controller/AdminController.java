@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImp;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -24,17 +25,19 @@ import java.util.Set;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
+    private final UserDetailsServiceImp userDetailsServiceImp;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService, UserDetailsServiceImp userDetailsServiceImp) {
 
         this.userService = userService;
         this.roleService = roleService;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
 
     @GetMapping(value = "/lk")
     public String getUserPage2(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        modelMap.addAttribute("user", userDetailsServiceImp.loadUserByUsername(principal.getName()));
         return "userPage";
     }
 
@@ -64,15 +67,11 @@ public class AdminController {
 
     @PostMapping(value = "admin/add")
     public String postAddUser(@ModelAttribute("user") User user,
-                              @RequestParam(required = false) String roleAdmin,
-                              @RequestParam(required = false) String roleUser) {
+                              @RequestParam(required = false) String  roleAdmin,
+                              @RequestParam(required = false) String  roleUser) {
         Set<Role> roles = new HashSet<>();
-        if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        if (roleUser != null && roleUser.equals("ROLE_USER")) {
-            roles.add(roleService.getRoleByName("ROLE_USER"));
-        }
+        roles.add(roleService.getRoleByName(roleAdmin));
+        roles.add(roleService.getRoleByName(roleUser));
         user.setRoles(roles);
         userService.saveUser(user);
         return "redirect:/admin";
@@ -84,10 +83,10 @@ public class AdminController {
         User user = userService.getUser(id);
         Set<Role> roles = user.getRoles();
         for (Role role : roles) {
-            if (role.equals(roleService.getRoleByName("ROLE_ADMIN"))) {
+            if (role.equals(roleService.getRoleById(1))) {
                 model.addAttribute("roleAdmin", true);
             }
-            if (role.equals(roleService.getRoleByName("ROLE_USER"))) {
+            if (role.equals(roleService.getRoleById(2))) {
                 model.addAttribute("roleUser", true);
             }
 
@@ -102,12 +101,8 @@ public class AdminController {
                                @RequestParam(required = false) String roleUser) {
 
         Set<Role> roles = new HashSet<>();
-        if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        if (roleUser != null && roleUser.equals("ROLE_USER")) {
-            roles.add(roleService.getRoleByName("ROLE_USER"));
-        }
+        roles.add(roleService.getRoleByName(roleAdmin));
+        roles.add(roleService.getRoleByName(roleUser));
         user.setRoles(roles);
         userService.update(user);
         return "redirect:/admin";

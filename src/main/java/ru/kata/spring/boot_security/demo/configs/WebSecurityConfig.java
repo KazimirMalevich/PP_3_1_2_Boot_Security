@@ -8,20 +8,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final LoginSuccessHandler loginSuccessHandler;
-    private final UserService userService;
+    private final UserDetailsServiceImp userDetailsServiceImp;
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserService userService) {
+    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsServiceImp userDetailsServiceImp) {
         this.loginSuccessHandler = loginSuccessHandler;
-        this.userService = userService;
+        this.userDetailsServiceImp = userDetailsServiceImp;
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,6 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsServiceImp).passwordEncoder(bCryptPasswordEncoder());
     }
 }

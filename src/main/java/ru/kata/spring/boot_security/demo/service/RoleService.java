@@ -13,4 +13,5 @@ public interface RoleService {
 
     Role getDefaultRole();
 
+    void addRole(Role role);
 }

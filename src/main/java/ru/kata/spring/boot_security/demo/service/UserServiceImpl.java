@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +35,6 @@ public class UserServiceImpl implements UserService {
         userRepository.saveUser(user);
     }
 
-//    @Transactional
-//    @Override
-//    public User deleteUser(Integer id) {
-//        return userRepository.deleteUser(id);
-//    }
-
     @Transactional
     @Override
     public void update(User user) {
@@ -65,8 +57,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.getAllUsers();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.getUserByUsername(username);
-    }
 }

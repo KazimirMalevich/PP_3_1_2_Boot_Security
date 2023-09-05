@@ -44,6 +44,11 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     @Override
     public Role getDefaultRole() {
-        return getRoleByName("ROLE_USER");
+        return getRoleById(2);
+    }
+
+    @Override
+    public void addRole(Role role) {
+        getEntityManager().persist(role);
     }
 }

@@ -41,12 +41,8 @@ public class RootController {
                           @RequestParam(required = false) String roleAdmin,
                           @RequestParam(required = false) String roleUser) {
         Set<Role> roles = new HashSet<>();
-        if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-        }
-        if (roleUser != null && roleUser.equals("ROLE_USER")) {
-            roles.add(roleService.getRoleByName("ROLE_USER"));
-        }
+        roles.add(roleService.getRoleByName(roleAdmin));
+        roles.add(roleService.getRoleByName(roleUser));
         user.setRoles(roles);
         userService.saveUser(user);
         return "redirect:/admin";

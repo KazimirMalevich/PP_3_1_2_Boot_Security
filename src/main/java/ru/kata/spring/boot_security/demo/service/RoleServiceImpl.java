@@ -38,4 +38,9 @@ public class RoleServiceImpl implements RoleService {
     public Role getDefaultRole() {
         return roleRepository.getDefaultRole();
     }
+
+    @Override
+    public void addRole(Role role) {
+        roleRepository.addRole(role);
+    }
 }

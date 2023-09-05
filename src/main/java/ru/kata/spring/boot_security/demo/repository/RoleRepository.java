@@ -8,4 +8,5 @@ public interface RoleRepository {
     Role getRoleById(Integer id);
     List<Role> allRoles();
     Role getDefaultRole();
+    void addRole(Role role);
 }
