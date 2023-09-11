@@ -6,22 +6,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImp;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final LoginSuccessHandler loginSuccessHandler;
-    private final UserDetailsServiceImp userDetailsServiceImp;
+    private final UserDetailsService userDetailsService;
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsServiceImp userDetailsServiceImp) {
+    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsService userDetailsService) {
         this.loginSuccessHandler = loginSuccessHandler;
-        this.userDetailsServiceImp = userDetailsServiceImp;
+        this.userDetailsService = userDetailsService;
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,6 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceImp).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

@@ -7,7 +7,7 @@
 
 <h2>Изменить пользователя</h2>
 <div>
-    <form th:action="@{/admin/edit}" th:object="${user}" method="post">
+    <form th:action="@{/admin/edit}" th:object="${user}" th:method="PATCH">
         <input type="hidden" name="id" th:value="${user.getId()}">
         <fieldset>
             <legend>Данные пользователя</legend>
@@ -38,6 +38,21 @@
                            th:value="ROLE_USER"
                            th:text="Пользователь">
                 </label>
+
+<!--                <label>-->
+<!--                    <input type="checkbox"-->
+<!--                           name="roles1"-->
+<!--                           th:checked="${roles1}"-->
+<!--                           th:value="ROLE_ADMIN"-->
+<!--                           th:text="Администратор">-->
+<!--                </label>-->
+<!--                <label>-->
+<!--                    <input type="checkbox"-->
+<!--                           name="roles2"-->
+<!--                           th:checked="${roles2}"-->
+<!--                           th:value="ROLE_USER"-->
+<!--                           th:text="Пользователь">-->
+<!--                </label>-->
             </p>
         </fieldset>
         <button type="submit">Изменить данные</button>
