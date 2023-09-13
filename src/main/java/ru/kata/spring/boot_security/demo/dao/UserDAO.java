@@ -1,12 +1,12 @@
-package ru.kata.spring.boot_security.demo.repository;
+package ru.kata.spring.boot_security.demo.dao;
 
 import ru.kata.spring.boot_security.demo.entity.User;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-public interface UserRepository {
-    List<User> getAllUsers();
+public interface UserDAO {
+    Set<User> getAllUsers();
 
     void saveUser(User user);
 

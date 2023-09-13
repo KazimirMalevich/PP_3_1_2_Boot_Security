@@ -1,21 +1,22 @@
-package ru.kata.spring.boot_security.demo.repository;
+package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository {
+public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public List<User> getAllUsers() {
-        return entityManager.createQuery("from User ", User.class).getResultList();
+    public Set<User> getAllUsers() {
+        return new LinkedHashSet<>(entityManager.createQuery("from User ", User.class).getResultList());
     }
 
     @Override

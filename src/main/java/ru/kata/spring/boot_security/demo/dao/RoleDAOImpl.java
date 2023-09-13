@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.repository;
+package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.entity.Role;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-public class RoleRepositoryImpl implements RoleRepository {
+public class RoleDAOImpl implements RoleDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
