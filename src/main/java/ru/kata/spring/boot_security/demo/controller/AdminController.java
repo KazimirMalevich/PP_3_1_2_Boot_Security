@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,7 +74,7 @@ public class AdminController {
     public String postAddUser(@ModelAttribute("user") User user,
                               @RequestParam(required = false) String  roleAdmin,
                               @RequestParam(required = false) String  roleUser) {
-        Set<Role> roles = new HashSet<>();
+        List<Role> roles = new ArrayList<>();
         roles.add(roleService.getRoleByName(roleAdmin));
         roles.add(roleService.getRoleByName(roleUser));
         user.setRoles(roles);
@@ -79,7 +82,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "admin/edit/{id}")
+    @GetMapping (value = "admin/edit/{id}")
     public String editUser(ModelMap model, @PathVariable("id") Integer id) {
         User user = userService.getUser(id);
         List<Role> roles = roleService.allRoles();
@@ -90,14 +93,7 @@ public class AdminController {
 
 
     @PatchMapping("admin/edit")
-    public String postEditUser(@ModelAttribute("user") User user,
-                               @RequestParam(required = false) String roleAdmin,
-                               @RequestParam(required = false) String roleUser) {
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByName(roleAdmin));
-        roles.add(roleService.getRoleByName(roleUser));
-        user.setRoles(roles);
+    public String postEditUser(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/admin";
     }

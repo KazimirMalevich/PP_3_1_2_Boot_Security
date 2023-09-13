@@ -14,7 +14,7 @@ public interface UserRepository {
 
     Optional<User> deleteUser(Integer id);
 
-    void update(User updateUser);
+    void update(User user);
 
     User getUserByUsername(String username);
 }

@@ -24,35 +24,20 @@
                     <input type="text" name="surname" th:id="surname" th:value="${user.getSurname()}">
                 </label>
                 <br/>
-                <label>
-                    <input type="checkbox"
-                           name="roleAdmin"
-                           th:checked="${roleAdmin}"
-                           th:value="ROLE_ADMIN"
-                           th:text="Администратор">
+<!--                <label th:for="roles">Role</label>-->
+<!--                <select multiple class="form-control" id="roles" name="roles">-->
+<!--                    <option th:each="role : ${roles}"-->
+<!--                            th:selected="*{hasRole('__${role.id}__')}" th:text="${role.name}"-->
+<!--                            th:value="${role.name}">-->
+<!--                </select>-->
+                <label th:for="roles">
+                    <input type="checkbox" name="roles"
+                           th:each="role : ${roles}"
+                           th:text="${role.getName()}"
+                           th:value="${role.getName()}"
+                           th:field="*{roles}"
+                    />
                 </label>
-                <label>
-                    <input type="checkbox"
-                           name="roleUser"
-                           th:checked="${roleUser}"
-                           th:value="ROLE_USER"
-                           th:text="Пользователь">
-                </label>
-
-<!--                <label>-->
-<!--                    <input type="checkbox"-->
-<!--                           name="roles1"-->
-<!--                           th:checked="${roles1}"-->
-<!--                           th:value="ROLE_ADMIN"-->
-<!--                           th:text="Администратор">-->
-<!--                </label>-->
-<!--                <label>-->
-<!--                    <input type="checkbox"-->
-<!--                           name="roles2"-->
-<!--                           th:checked="${roles2}"-->
-<!--                           th:value="ROLE_USER"-->
-<!--                           th:text="Пользователь">-->
-<!--                </label>-->
             </p>
         </fieldset>
         <button type="submit">Изменить данные</button>

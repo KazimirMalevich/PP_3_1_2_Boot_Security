@@ -7,7 +7,9 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -25,7 +27,7 @@ public class DbInit {
         if (roleService.allRoles().isEmpty()) {
             roleService.addRole(new Role("ROLE_ADMIN"));
             roleService.addRole(new Role("ROLE_USER"));
-            Set<Role> roles = new HashSet<>();
+            List<Role> roles = new ArrayList<>();
             roles.add(roleService.getRoleById(1));
             User user = new User("admin", "admin", "admin");
             user.setRoles(roles);
