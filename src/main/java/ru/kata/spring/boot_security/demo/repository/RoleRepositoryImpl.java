@@ -5,7 +5,8 @@ import ru.kata.spring.boot_security.demo.entity.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
@@ -36,10 +37,10 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public List<Role> allRoles() {
-        return getEntityManager()
+    public Set<Role> allRoles() {
+        return new HashSet<>(getEntityManager()
                 .createQuery("select r from Role r", Role.class)
-                .getResultList();
+                .getResultList());
     }
 
     @Override
@@ -48,7 +49,8 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public void addRole(Role role) {
+    public void addRoles(Role role) {
+        
         getEntityManager().persist(role);
     }
 }

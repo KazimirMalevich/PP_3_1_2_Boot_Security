@@ -64,28 +64,45 @@ public class AdminController {
     }
 
     @GetMapping(value = "admin/add")
-    public String addUser(Model model) {
+    public String addUser(ModelMap model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("roless", roleService.allRoles());
+        System.out.println("_____________________________________________________");
+        System.out.println(user.toString());
+        System.out.println(roleService.allRoles());
+        System.out.println("_____________________________________________________");
         return "addUser";
     }
 
+
+//    @PostMapping(value = "admin/add")
+//    public String postAddUser(@ModelAttribute("user") User user,
+//                              @RequestParam(required = false) String  roleAdmin,
+//                              @RequestParam(required = false) String  roleUser) {
+//        List<Role> roles = new ArrayList<>();
+//        roles.add(roleService.getRoleByName(roleAdmin));
+//        roles.add(roleService.getRoleByName(roleUser));
+//        user.setRoles(roles);
+//        userService.saveUser(user);
+//        return "redirect:/admin";
+//    }
+
     @PostMapping(value = "admin/add")
-    public String postAddUser(@ModelAttribute("user") User user,
-                              @RequestParam(required = false) String  roleAdmin,
-                              @RequestParam(required = false) String  roleUser) {
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleService.getRoleByName(roleAdmin));
-        roles.add(roleService.getRoleByName(roleUser));
-        user.setRoles(roles);
+    public String postAddUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
+
+        System.out.println("_____________________________________________________");
+        System.out.println(user.toString());
+        System.out.println("_____________________________________________________");
         return "redirect:/admin";
     }
 
     @GetMapping (value = "admin/edit/{id}")
     public String editUser(ModelMap model, @PathVariable("id") Integer id) {
         User user = userService.getUser(id);
-        List<Role> roles = roleService.allRoles();
+        Set<Role> roles = roleService.allRoles();
+        System.out.println(roles.toString());
         model.addAttribute("roles", roles);
         model.addAttribute("user", user);
         return "editUser";
@@ -94,7 +111,9 @@ public class AdminController {
 
     @PatchMapping("admin/edit")
     public String postEditUser(@ModelAttribute("user") User user) {
+
         userService.update(user);
+
         return "redirect:/admin";
     }
 

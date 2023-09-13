@@ -10,13 +10,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,8 +34,12 @@ public class User implements UserDetails {
     private String surname;
     @Column(name = "password")
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 
     public User() {
@@ -51,7 +58,7 @@ public class User implements UserDetails {
 //        this.roles = roles;
 //    }
 
-    public User(String username, String surname, String password, List<Role> roles) {
+    public User(String username, String surname, String password, Set<Role> roles) {
         this.username = username;
         this.surname = surname;
         this.password = password;
@@ -82,13 +89,20 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+//    public void addRoleToUser(Role role) {
+//        if (roles==null) {
+//            roles = new ArrayList<>();
+//        }
+//        roles.add(role);
+//    }
 
     public boolean hasRole(Integer roleId) {
         if (null == roles || 0 == roles.size()) {

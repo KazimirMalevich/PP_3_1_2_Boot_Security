@@ -7,6 +7,7 @@ import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -30,7 +31,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> allRoles() {
+    public Set<Role> allRoles() {
         return roleRepository.allRoles();
     }
 
@@ -41,6 +42,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addRole(Role role) {
-        roleRepository.addRole(role);
+        roleRepository.addRoles(role);
     }
 }

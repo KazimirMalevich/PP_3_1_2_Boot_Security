@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -25,8 +27,10 @@ public class Role implements GrantedAuthority {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+
+//    @Transient
+////    @ManyToMany(mappedBy = "roles")
+//    private List<User> users;
 
     public Role() {
     }
@@ -55,14 +59,20 @@ public class Role implements GrantedAuthority {
     public void setName(String name) {
         this.name = name;
     }
+//    public void addUserToRole(User user) {
+//        if (users==null) {
+//            users = new ArrayList<>();
+//        }
+//        users.add(user);
+//    }
 
-    public List<User> getUsers() {
-        return users;
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 
     @Override
     public String getAuthority() {
@@ -74,13 +84,13 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
+        return
                 Objects.equals(name, role.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(name);
     }
 
     @Override
