@@ -31,30 +31,14 @@
                            th:id="surname">
                 </label>
                 <br/>
-
-<!--                                <label th:for="roles">Role</label>-->
-<!--                                <select multiple class="form-control" id="roles" name="roles">-->
-<!--                                    <option th:each="role : ${roless}"-->
-<!--                                            th:selected="*{hasRole('__${role.id}__')}" th:text="${role.name}"-->
-<!--                                            th:value="${role.name}">-->
-<!--                                </select>-->
-
                 <label>
                     <input type="checkbox"
                            name="roles"
                            th:each="role : ${roless}"
                            th:value="${role.getName()}"
                            th:text="${role.name}"
-                           >
-<!--                    <label th:for="roles.name"></label>-->
-
+                    >
                 </label>
-<!--                <label>-->
-<!--                    <input type="checkbox"-->
-<!--                           name="roleUser"-->
-<!--                           th:value="${roles.get(2)}"-->
-<!--                           th:text="Пользователь">-->
-<!--                </label>-->
             </p>
         </fieldset>
         <button type="submit">Сохранить пользователя</button>

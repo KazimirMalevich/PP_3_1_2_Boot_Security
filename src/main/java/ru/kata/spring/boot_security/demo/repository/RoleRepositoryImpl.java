@@ -51,6 +51,6 @@ public class RoleRepositoryImpl implements RoleRepository {
     @Override
     public void addRoles(Role role) {
         
-        getEntityManager().persist(role);
+        getEntityManager().merge(role);
     }
 }

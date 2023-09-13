@@ -14,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -49,14 +46,6 @@ public class User implements UserDetails {
         this.surname = surname;
         this.password = password;
     }
-
-//    public User(Integer id, String username, String surname, String password, List<Role> roles) {
-//        this.id = id;
-//        this.username = username;
-//        this.surname = surname;
-//        this.password = password;
-//        this.roles = roles;
-//    }
 
     public User(String username, String surname, String password, Set<Role> roles) {
         this.username = username;
@@ -95,21 +84,6 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-//    public void addRoleToUser(Role role) {
-//        if (roles==null) {
-//            roles = new ArrayList<>();
-//        }
-//        roles.add(role);
-//    }
-
-    public boolean hasRole(Integer roleId) {
-        if (null == roles || 0 == roles.size()) {
-            return false;
-        }
-        Optional<Role> findRole = roles.stream().filter(role -> roleId == role.getId()).findFirst();
-        return findRole.isPresent();
     }
 
     @Override
@@ -152,15 +126,14 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(username, user.username) &&
+        return Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(surname, user.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, surname);
+        return Objects.hash(username, password, surname);
     }
 
     @Override
